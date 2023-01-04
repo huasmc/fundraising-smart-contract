@@ -1,0 +1,32 @@
+[
+  {
+    "hash": 0,
+    "previousHash": null
+  },
+  {
+    "hash": "000d1cb4b9df921c2638d6d8ab7cbd48fa7137e6f2552158d0076dfdb31e42d0",
+    "previousHash": 0,
+    "nonce": 6,
+    "transactions": [],
+    "smartContracts": [
+      {
+        "address": "04496f994e3eb516aedc341fdf645b3216c2679bd135acf7e09b3ea23ebf845a3f77937ee8640277362549b2032e98ca70",
+        "creatorAddress": "047f18310ca11477a0ccd328df42d7ff9cd068ac6816d9c76535b0fe1b7b45ab7312ff6167964c050e66c6db00642c5492",
+        "functions": {
+          "get-description.js": "const contractState = JSON.parse(process.env.CONTRACT_STATE);\n\nconsole.log(`Here's the description of the fundraising contract: ${contractState.description}`)",
+          "get-state.js": "const { addTransaction, updateContractState } = (await import('./blockchain-helpers.js'));\n\nconst contractState = JSON.parse(process.env.CONTRACT_STATE);\n\nconsole.log(contractState)",
+          "on-new-block.js": "const { addTransaction, updateContractState } = (await import('./blockchain-helpers.js'));\n\nconst contractState = JSON.parse(process.env.CONTRACT_STATE);\nconst contractAddress = process.env.CONTRACT_ADDRESS;\nconst privateKey = process.env.PRIVATE_KEY;\nconst creatorAddress = process.env.CREATOR_ADDRESS;\nconst blockchainLength = process.env.BLOCKCHAIN_LENGTH;\n// Add your code below\n\n// If blockLength < 7 -> send funds back to donor \nif (blockchainLength >= 7 && contractState.status != 'closed') {\n    contractState.transactions.forEach((transaction) => {\n        addTransaction(privateKey, transaction.fromAddress, transaction.amount)\n    });\n    contractState.status = \"closed\";\n    updateContractState(contractAddress, contractState);\n}\n",
+          "on-transaction.js": "const { addTransaction, updateContractState } = (await import('./blockchain-helpers.js'));\n\nconst contractState = JSON.parse(process.env.CONTRACT_STATE);\nconst contractAddress = process.env.CONTRACT_ADDRESS;\nconst privateKey = process.env.PRIVATE_KEY;\nconst creatorAddress = process.env.CREATOR_ADDRESS;\nconst transaction = JSON.parse(process.env.TRANSACTION);\n// Add your code below\n\nconsole.log(transaction);\n// Put transaction in state\ncontractState.transactions.push(transaction);\n// Add funds to raised\ncontractState.raised += transaction.amount;\n\nupdateContractState(contractAddress, contractState);\n// If there's  150 - send funds to contract creator\nif (contractState.raised >= 150) {\n    addTransaction(privateKey, creatorAddress, contractState.raised)\n    contractState.status = \"closed\";\n    updateContractState(contractAddress, contractState);\n}",
+          "other-files.js": "const { addTransaction, updateContractState } = (await import('./blockchain-helpers.js'));\n\nconst contractState = JSON.parse(process.env.CONTRACT_STATE);\nconst contractAddress = process.env.CONTRACT_ADDRESS;\nconst privateKey = process.env.PRIVATE_KEY;\nconst creatorAddress = process.env.CREATOR_ADDRESS;\nconst blockchainLength = process.env.BLOCKCHAIN_LENGTH;\nconst args = JSON.parse(process.env.ARGS);\n",
+          "update-description.js": "const { updateContractState } = (await import('./blockchain-helpers.js'));\n\nconst contractAddress = process.env.CONTRACT_ADDRESS;\nconst contractState = JSON.parse(process.env.CONTRACT_STATE);\nconst args = JSON.parse(process.env.ARGS);\n\ncontractState.description = args[0];\n\nupdateContractState(contractAddress, contractState);"
+        },
+        "state": {
+          "status": "open",
+          "description": "Smart contract",
+          "transactions": [],
+          "raised": 0
+        }
+      }
+    ]
+  }
+]

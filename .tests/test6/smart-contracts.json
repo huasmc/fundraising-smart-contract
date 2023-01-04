@@ -1,0 +1,36 @@
+[
+  {
+    "address": "043629aa6439aead5fb7867678c15f999af724dfd8ad9a82e4338d7ebff4d4f85add8b2ac77521b2ec2816c0b1724e6200",
+    "state": {
+      "status": "open",
+      "description": "Smart contract",
+      "transactions": [
+        {
+          "fromAddress": "0412bb6129d866a633aa62270e84be8630ebf803a64f6879a5ac08f12cde2aeca2eb272481fcc742d568aad80e44ba68c5",
+          "toAddress": "043629aa6439aead5fb7867678c15f999af724dfd8ad9a82e4338d7ebff4d4f85add8b2ac77521b2ec2816c0b1724e6200",
+          "amount": 200,
+          "hash": "5d871c3001b9b00547f6ae15364fb3080f948bd50632f4f59fa55f26e8199a22",
+          "signature": "3035021809534add7cebe64291a887b0d7895b0d160a64706e4cb0b3021900b0459139aabe268a4bafcef8790fd00cb81b6fc830f223d7"
+        }
+      ],
+      "raised": 200
+    }
+  },
+  {
+    "address": "043629aa6439aead5fb7867678c15f999af724dfd8ad9a82e4338d7ebff4d4f85add8b2ac77521b2ec2816c0b1724e6200",
+    "state": {
+      "status": "closed",
+      "description": "Smart contract",
+      "transactions": [
+        {
+          "fromAddress": "0412bb6129d866a633aa62270e84be8630ebf803a64f6879a5ac08f12cde2aeca2eb272481fcc742d568aad80e44ba68c5",
+          "toAddress": "043629aa6439aead5fb7867678c15f999af724dfd8ad9a82e4338d7ebff4d4f85add8b2ac77521b2ec2816c0b1724e6200",
+          "amount": 200,
+          "hash": "5d871c3001b9b00547f6ae15364fb3080f948bd50632f4f59fa55f26e8199a22",
+          "signature": "3035021809534add7cebe64291a887b0d7895b0d160a64706e4cb0b3021900b0459139aabe268a4bafcef8790fd00cb81b6fc830f223d7"
+        }
+      ],
+      "raised": 200
+    }
+  }
+]

@@ -1,0 +1,97 @@
+[
+  {
+    "hash": 0,
+    "previousHash": null
+  },
+  {
+    "hash": "000d076630a254fea54a16ce53ba540ed091f9499dd7da1e1688527d6de31124",
+    "previousHash": 0,
+    "nonce": 81,
+    "transactions": [],
+    "smartContracts": [
+      {
+        "address": "04841de3c18560ecf54e7a358446225128382858a3b017ac868d5c95433db47e044e67cef128da3bdc62980f0dbae0436e",
+        "creatorAddress": "047f18310ca11477a0ccd328df42d7ff9cd068ac6816d9c76535b0fe1b7b45ab7312ff6167964c050e66c6db00642c5492",
+        "functions": {
+          "get-description.js": "const contractState = JSON.parse(process.env.CONTRACT_STATE);\n\nconsole.log(`Here's the description of the fundraising contract: ${contractState.description}`)",
+          "get-state.js": "const { addTransaction, updateContractState } = (await import('./blockchain-helpers.js'));\n\nconst contractState = JSON.parse(process.env.CONTRACT_STATE);\n\nconsole.log(contractState)",
+          "on-new-block.js": "const { addTransaction, updateContractState } = (await import('./blockchain-helpers.js'));\n\nconst contractState = JSON.parse(process.env.CONTRACT_STATE);\nconst contractAddress = process.env.CONTRACT_ADDRESS;\nconst privateKey = process.env.PRIVATE_KEY;\nconst creatorAddress = process.env.CREATOR_ADDRESS;\nconst blockchainLength = process.env.BLOCKCHAIN_LENGTH;\n// Add your code below\n\n// If blockLength < 7 -> send funds back to donor \nif (blockchainLength >= 7 && contractState.status != 'closed') {\n    contractState.transactions.forEach((transaction) => {\n        addTransaction(privateKey, transaction.fromAddress, transaction.amount)\n    });\n    contractState.status = \"closed\";\n    updateContractState(contractAddress, contractState);\n}\n",
+          "on-transaction.js": "const { addTransaction, updateContractState } = (await import('./blockchain-helpers.js'));\n\nconst contractState = JSON.parse(process.env.CONTRACT_STATE);\nconst contractAddress = process.env.CONTRACT_ADDRESS;\nconst privateKey = process.env.PRIVATE_KEY;\nconst creatorAddress = process.env.CREATOR_ADDRESS;\nconst transaction = JSON.parse(process.env.TRANSACTION);\n// Add your code below\n\nconsole.log(transaction);\n// Put transaction in state\ncontractState.transactions.push(transaction);\n// Add funds to raised\ncontractState.raised += transaction.amount;\n\nupdateContractState(contractAddress, contractState);\n// If there's  150 - send funds to contract creator\nif (contractState.raised >= 150) {\n    addTransaction(privateKey, creatorAddress, contractState.raised)\n    contractState.status = \"closed\";\n    updateContractState(contractAddress, contractState);\n}",
+          "other-files.js": "const { addTransaction, updateContractState } = (await import('./blockchain-helpers.js'));\n\nconst contractState = JSON.parse(process.env.CONTRACT_STATE);\nconst contractAddress = process.env.CONTRACT_ADDRESS;\nconst privateKey = process.env.PRIVATE_KEY;\nconst creatorAddress = process.env.CREATOR_ADDRESS;\nconst blockchainLength = process.env.BLOCKCHAIN_LENGTH;\nconst args = JSON.parse(process.env.ARGS);\n",
+          "update-description.js": "const { updateContractState } = (await import('./blockchain-helpers.js'));\n\nconst contractAddress = process.env.CONTRACT_ADDRESS;\nconst contractState = JSON.parse(process.env.CONTRACT_STATE);\nconst args = JSON.parse(process.env.ARGS);\n\ncontractState.description = args[0];\n\nupdateContractState(contractAddress, contractState);"
+        },
+        "state": {
+          "status": "open",
+          "description": "Smart contract",
+          "transactions": [],
+          "raised": 0
+        }
+      }
+    ]
+  },
+  {
+    "hash": "0072440f5d523af8f0a63d7572f8a4fc2e72f3305283201b347a2e90b1291b95",
+    "previousHash": "000d076630a254fea54a16ce53ba540ed091f9499dd7da1e1688527d6de31124",
+    "nonce": 10,
+    "transactions": [
+      {
+        "fromAddress": null,
+        "toAddress": "047f18310ca11477a0ccd328df42d7ff9cd068ac6816d9c76535b0fe1b7b45ab7312ff6167964c050e66c6db00642c5492",
+        "amount": 50
+      }
+    ],
+    "smartContracts": []
+  },
+  {
+    "hash": "00691e2350cfd42d2cb00b8223fc52df5c173cc17d17c6e959d264c0d60ee899",
+    "previousHash": "0072440f5d523af8f0a63d7572f8a4fc2e72f3305283201b347a2e90b1291b95",
+    "nonce": 16,
+    "transactions": [
+      {
+        "fromAddress": null,
+        "toAddress": "041608a1e5bc12c505bb60b52bf64ca40f816f14acc9e31bfa21c6c7ba435a215a8f54ba49ce767b950cfdfea2efe261a9",
+        "amount": 50
+      }
+    ],
+    "smartContracts": []
+  },
+  {
+    "hash": "002eec236052446333cb891803271c5ab830c37e93f06f8665c8fe9dd58f9421",
+    "previousHash": "00691e2350cfd42d2cb00b8223fc52df5c173cc17d17c6e959d264c0d60ee899",
+    "nonce": 59,
+    "transactions": [
+      {
+        "fromAddress": null,
+        "toAddress": "041608a1e5bc12c505bb60b52bf64ca40f816f14acc9e31bfa21c6c7ba435a215a8f54ba49ce767b950cfdfea2efe261a9",
+        "amount": 50
+      }
+    ],
+    "smartContracts": []
+  },
+  {
+    "hash": "0040cbfd5bb3bd930fc235525e6bfd94b0224fa1b2f48ef6c81e16165608eca2",
+    "previousHash": "002eec236052446333cb891803271c5ab830c37e93f06f8665c8fe9dd58f9421",
+    "nonce": 850,
+    "transactions": [
+      {
+        "fromAddress": null,
+        "toAddress": "041608a1e5bc12c505bb60b52bf64ca40f816f14acc9e31bfa21c6c7ba435a215a8f54ba49ce767b950cfdfea2efe261a9",
+        "amount": 50
+      }
+    ],
+    "smartContracts": []
+  },
+  {
+    "hash": "00b82461639e1da823b13607dfe502a910b00a6d867b8d8445376ece1ffc242e",
+    "previousHash": "0040cbfd5bb3bd930fc235525e6bfd94b0224fa1b2f48ef6c81e16165608eca2",
+    "nonce": 221,
+    "transactions": [
+      {
+        "fromAddress": null,
+        "toAddress": "041608a1e5bc12c505bb60b52bf64ca40f816f14acc9e31bfa21c6c7ba435a215a8f54ba49ce767b950cfdfea2efe261a9",
+        "amount": 50
+      }
+    ],
+    "smartContracts": []
+  }
+]
